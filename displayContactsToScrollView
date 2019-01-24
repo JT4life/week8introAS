@@ -1,0 +1,100 @@
+package com.example.friends;
+
+import android.provider.ContactsContract;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+
+    Button      contactButton;
+    EditText    nameText;
+    EditText    numberText;
+    TextView    textView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        contactButton = findViewById(R.id.button);
+        nameText = findViewById(R.id.editTextName);
+        numberText = findViewById(R.id.editTextNumber);
+        textView = findViewById(R.id.contactsAdded);
+        final ContactsManager contactsManager = new ContactsManager();
+
+        contactButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String enterText;
+                        String enterNumber;
+
+                        enterText = nameText.getText().toString();
+                        enterNumber = numberText.getText().toString();
+
+                        contactsManager.createContact(enterText, enterNumber);
+
+                        textView.getText();
+            }
+        });
+
+    }
+}
+
+package com.example.friends;
+
+public class Contact {
+
+    private String name;
+    private String phoneNumber;
+
+    public Contact(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
+
+    public Contact() {
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+}
+
+package com.example.friends;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ContactsManager {
+
+    private ArrayList<Contact> contacts;
+
+    public ContactsManager() {
+        contacts = new ArrayList<>(); // Initialise the list once.
+    }
+    public Contact createContact(String name, String phoneNumber) {
+        Contact contact = new Contact(name, phoneNumber);
+        contacts.add(contact); // Add the new contact to the list
+        return contact;
+    }
+    // Use this to access all your contacts
+    public ArrayList<Contact> getContacts() {
+        return contacts;
+    }
+}
+
+
